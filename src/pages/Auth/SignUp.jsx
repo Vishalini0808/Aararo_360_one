@@ -88,6 +88,40 @@ const SignUp = () => {
     const isValid = Object.values(newErrors).every(error => !error);
     
     if (isValid) {
+      if (isValid) {
+  const userData = {
+    name: formData.name,
+    email: formData.email,
+    password: formData.password
+  };
+
+  fetch("http://localhost:8080/api/users/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData)
+  })
+  .then(async (res) => {
+    if (!res.ok) {
+      const message = await res.text();
+      throw new Error(message);
+    }
+    return res.json();
+  })
+  .then(data => {
+    localStorage.setItem('aararo_user', JSON.stringify({
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      joinDate: new Date().toISOString()
+    }));
+    alert("Account created successfully! Welcome to Aararo 360°");
+    navigate('/');
+  })
+  .catch(err => {
+    alert("Signup failed: " + err.message);
+  });
+}
+
       // Store user data in localStorage (simulating backend)
       const userData = {
         name: formData.name,
