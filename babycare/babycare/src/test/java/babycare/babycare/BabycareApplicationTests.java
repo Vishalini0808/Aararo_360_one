@@ -1,4 +1,4 @@
-package com.example.babycare;
+package babycare.babycare;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
