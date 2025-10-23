@@ -1,0 +1,397 @@
+/* Pink and purple theme for Babysitting */
+:root {
+  --pink-50: #fdf2f8;
+  --pink-200: #fbcfe8;
+  --pink-400: #f472b6;
+  --pink-600: #db2777;
+  --purple-50: #faf5ff;
+  --purple-200: #e9d5ff;
+  --purple-400: #c084fc;
+  --purple-600: #9333ea;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --red-500: #ef4444;
+  --green-500: #10b981;
+}
+
+.bs-root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--pink-50), var(--purple-50));
+  padding: 24px 16px 40px;
+}
+
+.bs-header {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.bs-title {
+  margin: 0;
+  font-size: 32px;
+  color: var(--gray-800);
+  background: linear-gradient(135deg, var(--pink-600), var(--purple-600));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bs-subtitle {
+  margin: 8px 0 16px;
+  color: var(--gray-600);
+  font-size: 16px;
+}
+
+.bs-back {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--purple-600);
+  border: 1px solid var(--purple-400);
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.bs-back:hover {
+  background: var(--purple-50);
+  transform: translateY(-1px);
+}
+
+.bs-content {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.bs-tip {
+  background: linear-gradient(135deg, var(--pink-200), var(--purple-200));
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.bs-tip p {
+  margin: 0;
+  color: var(--gray-700);
+  font-weight: 500;
+}
+
+.bs-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.bs-form-section,
+.bs-sitters-section {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(244, 114, 182, 0.2);
+}
+
+.bs-section-title {
+  margin: 0 0 20px;
+  font-size: 24px;
+  color: var(--gray-800);
+  background: linear-gradient(135deg, var(--pink-600), var(--purple-600));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bs-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.bs-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bs-field-full {
+  grid-column: span 2;
+}
+
+.bs-field label {
+  font-weight: 600;
+  color: var(--gray-700);
+  font-size: 14px;
+}
+
+.bs-field input,
+.bs-field select,
+.bs-field textarea {
+  padding: 12px 16px;
+  border: 2px solid var(--gray-100);
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.bs-field input:focus,
+.bs-field select:focus,
+.bs-field textarea:focus {
+  outline: none;
+  border-color: var(--pink-400);
+  box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.1);
+}
+
+.bs-input-error {
+  border-color: var(--red-500) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.bs-error {
+  color: var(--red-500);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.bs-error-block {
+  display: block;
+  margin: 16px 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+.bs-button {
+  background: linear-gradient(135deg, var(--pink-400), var(--purple-400));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.bs-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(244, 114, 182, 0.3);
+}
+
+.bs-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.bs-button-submit {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  font-size: 16px;
+}
+
+.bs-button-book {
+  padding: 8px 16px;
+  font-size: 12px;
+}
+
+.bs-sitters-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.bs-sitter-card {
+  background: white;
+  border: 2px solid var(--gray-100);
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.bs-sitter-card:hover {
+  border-color: var(--pink-400);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(244, 114, 182, 0.15);
+}
+
+.bs-sitter-selected {
+  border-color: var(--purple-400);
+  background: linear-gradient(135deg, var(--purple-50), var(--pink-50));
+}
+
+.bs-sitter-unavailable {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bs-sitter-unavailable:hover {
+  transform: none;
+  border-color: var(--gray-100);
+  box-shadow: none;
+}
+
+.bs-sitter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.bs-sitter-name {
+  margin: 0;
+  font-size: 18px;
+  color: var(--gray-800);
+  font-weight: 600;
+}
+
+.bs-sitter-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--gray-600);
+  font-size: 14px;
+}
+
+.bs-rating-stars {
+  font-size: 16px;
+}
+
+.bs-sitter-experience {
+  margin: 0 0 8px;
+  color: var(--pink-600);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.bs-sitter-bio {
+  margin: 0 0 16px;
+  color: var(--gray-600);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.bs-sitter-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bs-sitter-rate {
+  font-weight: 600;
+  color: var(--purple-600);
+  font-size: 16px;
+}
+
+.bs-sitter-unavailable-text {
+  color: var(--gray-600);
+  font-size: 14px;
+  font-style: italic;
+}
+
+.bs-link {
+  color: var(--purple-600);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.bs-link:hover {
+  color: var(--purple-600);
+  text-decoration: underline;
+}
+
+/* Confirmation Page */
+.bs-confirmation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.bs-confirmation-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(244, 114, 182, 0.2);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.bs-confirmation-title {
+  margin: 0 0 16px;
+  font-size: 28px;
+  color: var(--green-500);
+}
+
+.bs-confirmation-text {
+  margin: 0 0 24px;
+  color: var(--gray-600);
+  font-size: 16px;
+}
+
+.bs-confirmation-details {
+  background: var(--gray-50);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.bs-confirmation-details p {
+  margin: 8px 0;
+  color: var(--gray-700);
+}
+
+.bs-confirmation-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .bs-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .bs-form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bs-field-full {
+    grid-column: span 1;
+  }
+  
+  .bs-title {
+    font-size: 24px;
+  }
+  
+  .bs-section-title {
+    font-size: 20px;
+  }
+  
+  .bs-confirmation-card {
+    padding: 24px;
+    margin: 0 16px;
+  }
+  
+  .bs-confirmation-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .bs-button {
+    width: 100%;
+    max-width: 200px;
+  }
+}

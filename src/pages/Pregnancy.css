@@ -1,0 +1,605 @@
+/* Pregnancy Container */
+.pregnancy-container {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.pregnancy-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.pregnancy-sidebar {
+  background: #f8f9fa;
+  border-right: 1px solid #e9ecef;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 30px 25px 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.sidebar-nav {
+  padding: 20px 0;
+}
+
+.nav-item {
+  display: block;
+  width: 100%;
+  padding: 15px 25px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.nav-item:hover {
+  background: #e9ecef;
+}
+
+.nav-item.active {
+  background: #fff;
+  border-left-color: #e91e63;
+}
+
+.nav-title {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+}
+
+.nav-description {
+  font-size: 0.8rem;
+  color: #6c757d;
+  line-height: 1.3;
+}
+
+/* Sidebar Ad */
+.sidebar-ad {
+  margin: 20px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.ad-header h4 {
+  color: #e91e63;
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+}
+
+.ad-header p {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.ad-button {
+  width: 100%;
+  padding: 12px;
+  background: #e91e63;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: background 0.3s ease;
+}
+
+.ad-button:hover {
+  background: #c2185b;
+}
+
+.brand-logos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+/* Main Content */
+.pregnancy-main {
+  background: #fff;
+}
+
+.main-content {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* Overview Styles */
+.pregnancy-overview {
+  padding: 40px;
+}
+
+.overview-hero {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.overview-hero h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #6c757d;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Trimester Navigation */
+.trimester-navigation {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.trimester-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.trimester-card:hover {
+  transform: translateY(-5px);
+}
+
+.trimester-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.trimester-content {
+  padding: 25px;
+}
+
+.trimester-content h3 {
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+  font-size: 1.3rem;
+}
+
+.trimester-weeks {
+  color: #e91e63;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.trimester-content p {
+  color: #6c757d;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Weekly Highlights */
+.weekly-highlights {
+  margin-bottom: 50px;
+}
+
+.weekly-highlights h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.section-intro {
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-size: 1.05rem;
+}
+
+.weeks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.week-card {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 8px;
+  border-left: 4px solid #e91e63;
+}
+
+.week-card h4 {
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+}
+
+.week-card p {
+  color: #6c757d;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.read-more {
+  background: none;
+  border: none;
+  color: #e91e63;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+/* Additional Weeks */
+.additional-weeks {
+  margin-bottom: 50px;
+}
+
+.weeks-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.week-item {
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+}
+
+.week-item h4 {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+}
+
+.week-item p {
+  color: #6c757d;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Trimester End */
+.trimester-end {
+  background: #f8f9fa;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.end-content h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.end-content p {
+  color: #6c757d;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+}
+
+/* Symptoms Page */
+.pregnancy-symptoms {
+  padding: 40px;
+}
+
+.symptoms-header h1 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+}
+
+.symptoms-subtitle {
+  color: #6c757d;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.divider {
+  height: 1px;
+  background: #e9ecef;
+  margin: 40px 0;
+}
+
+.getting-started h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.getting-started p {
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+}
+
+.view-all-button {
+  background: none;
+  border: 2px solid #e91e63;
+  color: #e91e63;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-all-button:hover {
+  background: #e91e63;
+  color: white;
+}
+
+.symptoms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin: 40px 0;
+}
+
+.symptom-card {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 8px;
+  border-left: 4px solid #4fc3f7;
+}
+
+.symptom-card h3 {
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  font-size: 1.2rem;
+}
+
+.symptom-description {
+  color: #6c757d;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.relief-tips {
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
+
+.read-more-section {
+  margin-top: 60px;
+}
+
+.read-more-section h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.read-more-section > p {
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-size: 1.05rem;
+}
+
+.featured-articles {
+  display: grid;
+  gap: 25px;
+}
+
+.featured-article {
+  padding: 25px;
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+}
+
+.featured-article h4 {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+}
+
+.featured-article p {
+  color: #6c757d;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.read-article {
+  background: none;
+  border: none;
+  color: #e91e63;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+/* Morning Sickness Page */
+.morning-sickness {
+  padding: 40px;
+}
+
+.ms-header h1 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+}
+
+.ms-subtitle {
+  color: #6c757d;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.ms-articles {
+  margin-bottom: 30px;
+}
+
+.ms-article {
+  margin-bottom: 25px;
+}
+
+.article-content h3 {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+}
+
+.article-content p {
+  color: #6c757d;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.article-divider {
+  height: 1px;
+  background: #e9ecef;
+  margin-top: 25px;
+}
+
+.quick-tips {
+  margin: 50px 0;
+}
+
+.quick-tips h2 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.tip-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.tip-number {
+  background: #e91e63;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.tip-card p {
+  color: #2c3e50;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.doctor-section {
+  background: #fff3e0;
+  padding: 30px;
+  border-radius: 8px;
+  border-left: 4px solid #ff9800;
+}
+
+.doctor-section h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.warning-signs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.warning-signs li {
+  padding: 8px 0;
+  color: #2c3e50;
+  border-bottom: 1px solid #ffe0b2;
+}
+
+.warning-signs li:last-child {
+  border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .pregnancy-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .pregnancy-sidebar {
+    display: none;
+  }
+  
+  .trimester-navigation {
+    grid-template-columns: 1fr;
+  }
+  
+  .weeks-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .weeks-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pregnancy-overview,
+  .pregnancy-symptoms,
+  .morning-sickness {
+    padding: 20px;
+  }
+  
+  .overview-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .symptoms-grid,
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+}

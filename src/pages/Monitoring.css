@@ -1,0 +1,926 @@
+.monitoring-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.monitoring-header {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.monitoring-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.monitoring-header p {
+  font-size: 1.3rem;
+  opacity: 0.95;
+  font-weight: 300;
+}
+
+/* Tab Navigation */
+.monitoring-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  background: white;
+  border-radius: 60px;
+  padding: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.tab-btn {
+  padding: 18px 35px;
+  border: none;
+  background: transparent;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+.tab-btn:hover:not(.active) {
+  background: #f8f9fa;
+  color: #495057;
+  transform: translateY(-1px);
+}
+
+/* Monitoring Sections */
+.monitoring-section {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.monitoring-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.monitoring-section h2 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Health Grid */
+.health-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.health-tracker, .growth-tracker {
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  padding: 25px;
+  border-radius: 15px;
+  border-left: 5px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.health-tracker:hover, .growth-tracker:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+}
+
+.health-tracker h3, .growth-tracker h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+/* Tracker Forms */
+.tracker-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tracker-input {
+  flex: 1;
+  padding: 12px 18px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.tracker-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.tracker-btn {
+  padding: 12px 25px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.tracker-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Tracker History */
+.tracker-history, .growth-chart {
+  max-height: 220px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.tracker-record, .growth-record {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: #f8f9fa;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border-left: 4px solid #28a745;
+  transition: all 0.2s ease;
+}
+
+.tracker-record:hover, .growth-record:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+}
+
+.tracker-record span, .growth-record span {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.tracker-record small, .growth-record small {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Progress Grid */
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.week-progress, .trimester-chart, .due-date-calculator, .kick-counter {
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.week-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.week-range {
+  width: 100%;
+  height: 10px;
+  border-radius: 8px;
+  background: #e9ecef;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.week-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+}
+
+.week-range::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.trimester-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.trimester {
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  color: white;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.trimester:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.trimester.first {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.trimester.second {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.trimester.third {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* Due Date Calculator */
+.calculator-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.date-input {
+  padding: 12px 18px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.calculate-btn {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.calculate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.due-date-result {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-top: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  border: 2px solid #667eea;
+}
+
+/* Kick Counter */
+.kick-display {
+  text-align: center;
+}
+
+.kick-count {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #667eea;
+  display: block;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.kick-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.kick-btn {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.kick-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.reset-btn {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.reset-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* Medical Records Styles */
+.medical-records, .ultrasound-reports, .prescription-tracker {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.record-form, .report-form, .prescription-form, .meal-form, .feed-form, .sleep-form, .exercise-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-input, .form-select, .form-textarea {
+  padding: 12px 18px;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-textarea {
+  grid-column: 1 / -1;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.add-record-btn {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.add-record-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.records-list, .prescriptions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.record-item, .prescription-item {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 5px solid #667eea;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.record-item:hover, .prescription-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.record-date {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.record-type {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Nutrition & Water Tracker */
+.nutrition-tracker, .water-tracker, .exercise-tracker {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.water-display {
+  text-align: center;
+}
+
+.water-count {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.water-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.water-btn {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.water-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Mood Tracker */
+.mood-tracker {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.mood-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.mood-btn {
+  padding: 15px;
+  border: 2px solid #e9ecef;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.mood-btn.active {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.mood-btn:hover:not(.active) {
+  border-color: #667eea;
+  transform: translateY(-1px);
+}
+
+.current-mood {
+  text-align: center;
+  font-weight: 700;
+  color: #667eea;
+  font-size: 1.2rem;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  border: 2px solid #667eea;
+}
+
+/* Mindfulness Activities */
+.mindfulness-activities {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activity-item {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  border-left: 4px solid #28a745;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.activity-item:hover {
+  transform: translateX(5px);
+  background: #f8f9fa;
+}
+
+/* Baby Monitoring Components */
+.feeding-tracker, .sleep-tracker, .vaccination-tracker, .milestone-tracker {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.time-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vaccine-list, .milestone-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.vaccine-item, .milestone-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #e9ecef;
+}
+
+.vaccine-item:hover, .milestone-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #667eea;
+}
+
+.milestone-item.achieved {
+  background: #d4edda;
+  border-left: 5px solid #28a745;
+  border-color: #28a745;
+}
+
+.vaccine-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.vaccine-name.completed {
+  text-decoration: line-through;
+  color: #28a745;
+  font-weight: 600;
+}
+
+/* Baby Details */
+.baby-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.baby-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.baby-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.baby-card h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.baby-info p {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.05rem;
+}
+
+/* Parent Tips & Wellness */
+.parent-tips, .postpartum-tracker, .breastfeeding-health, .emotional-wellness {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  border-radius: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.tips-list, .recovery-status, .breastfeeding-tips, .wellness-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tip-item, .status-item {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.tip-item:hover, .status-item:hover {
+  transform: translateX(5px);
+  background: #f8f9fa;
+}
+
+/* Dashboard */
+.data-dashboard {
+  margin-top: 30px;
+  padding: 30px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px 25px;
+  border-radius: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.stat-card h4 {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.stat-card p {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Emergency Alerts */
+.emergency-alerts {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.3);
+}
+
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.alert-item {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.alert-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(5px);
+}
+
+.alert-icon {
+  font-size: 1.4rem;
+}
+
+/* Scrollbar Styling */
+.tracker-history::-webkit-scrollbar,
+.growth-chart::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tracker-history::-webkit-scrollbar-track,
+.growth-chart::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.tracker-history::-webkit-scrollbar-thumb,
+.growth-chart::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+}
+
+.tracker-history::-webkit-scrollbar-thumb:hover,
+.growth-chart::-webkit-scrollbar-thumb:hover {
+  background: #5a6fd8;
+}
+
+/* Animation for new records */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tracker-record, .growth-record, .record-item, .prescription-item {
+  animation: fadeIn 0.4s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .monitoring-container {
+    padding: 15px;
+  }
+  
+  .monitoring-header {
+    padding: 30px 20px;
+  }
+  
+  .monitoring-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .monitoring-tabs {
+    flex-direction: column;
+    border-radius: 15px;
+    gap: 8px;
+  }
+  
+  .tab-btn {
+    border-radius: 12px;
+    margin-bottom: 0;
+  }
+  
+  .health-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .progress-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tracker-form {
+    flex-direction: column;
+  }
+  
+  .kick-buttons, .water-buttons {
+    flex-direction: column;
+  }
+  
+  .record-form, .report-form, .prescription-form, .meal-form, .feed-form, .sleep-form, .exercise-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .mood-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .monitoring-section {
+    padding: 20px;
+  }
+  
+  .baby-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .monitoring-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .monitoring-header p {
+    font-size: 1.1rem;
+  }
+  
+  .mood-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .health-tracker, .growth-tracker, .week-progress, .trimester-chart, .due-date-calculator, .kick-counter {
+    padding: 20px;
+  }
+}
