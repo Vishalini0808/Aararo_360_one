@@ -299,20 +299,20 @@ const Header = () => {
                 </div>
               ) : (
                 <div className="flex items-center space-x-4">
-    <Link 
-      to="/signin" 
-      className="hidden sm:block px-5 py-2.5 text-gray-700 hover:text-pink-600 font-semibold transition-colors duration-300"
-    >
-      Sign In
-    </Link>
-    <Link 
-      to="/signup" 
-      className="px-6 py-2.5 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-xl hover:from-pink-600 hover:to-blue-600 transform hover:-translate-y-0.5 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
-    >
-      Get Started
-    </Link>
-  </div>
-)}
+                  <Link 
+                    to="/signin" 
+                    className="hidden sm:block px-5 py-2.5 text-gray-700 hover:text-pink-600 font-semibold transition-colors duration-300"
+                  >
+                    Sign In
+                  </Link>
+                  <Link 
+                    to="/signup" 
+                    className="px-6 py-2.5 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-xl hover:from-pink-600 hover:to-blue-600 transform hover:-translate-y-0.5 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              )}
 
               {/* Mobile Menu Button */}
               <button 

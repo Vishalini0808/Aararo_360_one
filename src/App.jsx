@@ -37,7 +37,7 @@ import BabyCareHub from './components/BabyCareHub';
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem('aararo_user') !== null;
-  return isLoggedIn ? children : <Navigate to="/signin" />;
+  return isLoggedIn ? children : <Navigate to="/" />;
 };
 
 // Public Route Component (redirect to home if already logged in)
@@ -99,13 +99,7 @@ function App() {
            
           {/* Protected Routes - With Header/Footer */} 
 
-            <Route path="/" element={<ProtectedRoute> <AppLayout><Home /></AppLayout> </ProtectedRoute>}/>
-            <Route path="/" element={<ProtectedRoute> <AppLayout><Home /></AppLayout> </ProtectedRoute>}/>
-            <Route path="/" element={<ProtectedRoute> <AppLayout><Home /></AppLayout> </ProtectedRoute>}/>
-            <Route path="/" element={<ProtectedRoute> <AppLayout><Home /></AppLayout> </ProtectedRoute>}/>
-            <Route path="/" element={<ProtectedRoute> <AppLayout><Home /></AppLayout> </ProtectedRoute>}/>
-            <Route path="/" element={<ProtectedRoute> <AppLayout><Home /></AppLayout> </ProtectedRoute>}/>
-            <Route path="/" element={<ProtectedRoute> <AppLayout><Home /></AppLayout> </ProtectedRoute>}/>
+            <Route path="/" element={<AppLayout><Home /></AppLayout>} />
             
             <Route path='/layout' element={Layout} />
             <Route path="/settings" element={<SettingsLayout />}>

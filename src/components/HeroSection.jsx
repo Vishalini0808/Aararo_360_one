@@ -1,8 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const HeroSection = () => {
+  const [showVideo, setShowVideo] = useState(false);
+
+  const openVideo = () => {
+    setShowVideo(true);
+  };
+
+  const closeVideo = () => {
+    setShowVideo(false);
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 min-h-screen flex items-center overflow-hidden px-25">
+      {/* Video Modal */}
+      {showVideo && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="relative bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <button
+              onClick={closeVideo}
+              className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white rounded-full p-2 transition-all duration-200 shadow-lg hover:shadow-xl"
+            >
+              <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <div className="aspect-video w-full">
+              <video 
+                className="w-full h-full object-cover" 
+                controls 
+                autoPlay 
+                muted
+              >
+                <source src="./demo.mp4" type="video/mp4" />
+                {/* <source src="/demo-video.webm" type="video/webm" /> */}
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100/50 via-transparent to-transparent"></div>
       
@@ -46,7 +84,10 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               </button>
               
-              <button className="group border-2 border-gray-300 text-gray-700 px-10 py-3.5 rounded-2xl font-semibold text-lg hover:border-purple-400 hover:bg-purple-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
+              <button 
+                onClick={openVideo}
+                className="group border-2 border-gray-300 text-gray-700 px-10 py-3.5 rounded-2xl font-semibold text-lg hover:border-purple-400 hover:bg-purple-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl"
+              >
                 <span className="flex items-center gap-3">
                   <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
