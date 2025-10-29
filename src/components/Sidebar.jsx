@@ -1,7 +1,6 @@
 import React from 'react'; 
  
-const Sidebar = ({ activeSection, setActiveSection, activeMonth, 
-setActiveMonth }) => { 
+const Sidebar = ({ activeSection, setActiveSection }) => { 
   const mainSections = [ 
     { id: 'month-guide', label: 'Month-by-Month Guide', icon: '📅' }, 
     { id: 'nutrition', label: 'Nutrition & Trimester Diet', icon: '🥗' }, 
@@ -9,79 +8,71 @@ setActiveMonth }) => {
     { id: 'labor', label: 'Labour & C-section Signs', icon: '👶' } 
   ]; 
  
-  const months = [ 
-    { id: 1, label: '1st Month (Week 1-4)' }, 
-    { id: 2, label: '2nd Month (Week 5-8)' }, 
-    { id: 3, label: '3rd Month (Week 9-12)' }, 
-    { id: 4, label: '4th Month (Week 13-16)' }, 
-    { id: 5, label: '5th Month (Week 17-20)' }, 
-    { id: 6, label: '6th Month (Week 21-24)' }, 
-    { id: 7, label: '7th Month (Week 25-28)' }, 
-    { id: 8, label: '8th Month (Week 29-32)' }, 
-    { id: 9, label: '9th Month (Week 33-40)' } 
-  ]; 
- 
   return ( 
-    <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-6"> 
+    <div className="bg-white rounded-2xl shadow-lg p-4 sticky top-6 h-fit"> 
       {/* Main Sections */} 
-      <div className="mb-8"> 
-        <h2 className="text-xl font-bold text-purple-800 mb-4">Pregnancy 
-Guide</h2> 
-        <nav className="space-y-2"> 
+      <div className="mb-6"> 
+        <h2 className="text-xl font-bold text-slate-800 mb-4">Pregnancy Guide</h2> 
+        <nav className="space-y-3"> 
           {mainSections.map((section) => ( 
             <button 
               key={section.id} 
               onClick={() => setActiveSection(section.id)} 
-              className={`w-full text-left px-4 py-3 rounded-xl transition-all duration
-300 flex items-center ${ 
+              className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center group ${
                 activeSection === section.id 
-                  ? 'bg-purple-600 text-white shadow-md' 
-                  : 'bg-purple-50 text-purple-700 hover:bg-purple-100 hover:shadowsm' 
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md' 
+                  : 'bg-slate-50 text-slate-700 hover:bg-slate-100 hover:shadow-sm border border-slate-200' 
               }`} 
             > 
-              <span className="text-lg mr-3">{section.icon}</span> 
+              <span className={`text-lg mr-3 transition-transform duration-300 group-hover:scale-110 ${
+                activeSection === section.id ? 'text-white' : 'text-blue-500'
+              }`}>{section.icon}</span> 
               <span className="font-medium">{section.label}</span> 
             </button> 
           ))} 
         </nav> 
       </div> 
  
-      {/* Month Navigation - Only show for month guide */} 
-      {activeSection === 'month-guide' && ( 
-        <div> 
-          <h3 className="text-lg font-bold text-purple-800 mb-4">Months</h3> 
-          <nav className="space-y-2"> 
-            {months.map((month) => ( 
-              <button 
-                key={month.id} 
-                onClick={() => setActiveMonth(month.id)} 
-                className={`w-full text-left px-4 py-3 rounded-xl transition-all 
-duration-300 ${ 
-                  activeMonth === month.id 
-                    ? 'bg-pink-500 text-white shadow-md transform scale-105' 
-                    : 'bg-pink-50 text-purple-700 hover:bg-pink-100 hover:shadow-sm' 
-                }`} 
-              > 
-                <span className="font-medium">{month.label}</span> 
-              </button> 
-            ))} 
-          </nav> 
-        </div> 
-      )} 
- 
       {/* Daily Reminder */} 
-      <div className="mt-6 p-4 bg-gradient-to-r from-pink-100 to-purple-100 
-rounded-xl border border-pink-200"> 
-        <p className="text-sm text-purple-700 text-center"> 
+      <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200"> 
+        <div className="flex items-center mb-2">
+          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-2">
+            <span className="text-white text-sm">💖</span>
+          </div>
+          <h3 className="text-sm font-semibold text-slate-800">Daily Reminder</h3>
+        </div>
+        <p className="text-xs text-slate-600 leading-relaxed"> 
           {[ 
-            "💖 You're doing amazing, mama!", 
-            "🌸 Stay hydrated and listen to your body", 
-            "🌺 Every kick is a little hello from your baby", 
-            "💫 Trust your instincts - you know best", 
-            "🌼 Rest when you need to, grow when you're ready" 
+            "You're doing amazing, mama! Stay hydrated and listen to your body.", 
+            "Every kick is a little hello from your baby. Trust your instincts.", 
+            "Rest when you need to, grow when you're ready. You know best!", 
+            "Your body is doing incredible work. Be kind to yourself today.", 
+            "Each day brings you closer to meeting your little one. Enjoy the journey." 
           ][Math.floor(Math.random() * 5)]} 
         </p> 
       </div> 
+
+      {/* Progress Overview */}
+      <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200">
+        <h3 className="text-sm font-semibold text-slate-800 mb-2 flex items-center">
+          <span className="text-blue-500 mr-2">📊</span>
+          Quick Stats
+        </h3>
+        <div className="space-y-2 text-xs text-slate-600">
+          <div className="flex justify-between">
+            <span>Trimesters:</span>
+            <span className="font-medium">3</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Total Months:</span>
+            <span className="font-medium">9</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Average Weeks:</span>
+            <span className="font-medium">40</span>
+          </div>
+        </div>
+      </div>
     </div> 
   ); 
 }; 

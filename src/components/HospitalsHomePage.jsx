@@ -41,16 +41,19 @@ export function HospitalsHomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 via-purple-50 to-white">
       {/* Header */}
-      <div className="bg-white border-b border-pink-100 shadow-sm">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
-              <span className="text-white text-2xl">❤️</span>
-            </div>
-            <div>
-              <h1 className="text-gray-800 text-xl font-semibold">MommyCare</h1>
-              <p className="text-gray-600">Your pregnancy companion</p>
-            </div>
+      <div className="bg-gradient-to-b from-pink-50 via-purple-50 to-white border-b border-pink-100 shadow-sm flex ">
+        {/* 🔙 Back Button Added Here */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+         <button
+          onClick={() => navigate(-1)}
+          className=" px-5 rounded-xl text-3xl font-semibold "
+         >
+           ← 
+         </button>
+      </div>
+        <div className="container mx-auto px-4 py-5">
+          <div className="flex justify-center items-center ">
+            <h2 className="text-gray-800 text-3xl font-semibold ">Welcome to Your Pregnancy Journey</h2>
           </div>
         </div>
       </div>
@@ -58,7 +61,7 @@ export function HospitalsHomePage() {
       <div className="container mx-auto px-4 py-12">
         {/* Welcome Section */}
         <div className="text-center mb-12">
-          <h2 className="text-gray-800 text-3xl font-semibold mb-4">Welcome to Your Pregnancy Journey</h2>
+         
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             We're here to support you every step of the way with trusted healthcare providers, helpful resources, and personalized care for you and your baby.
           </p>

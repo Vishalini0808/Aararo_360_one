@@ -31,7 +31,7 @@ export default function BabyCard() {
         {/* Back Button */}
         <div className="mb-8 pt-4">
           <Link 
-            to="/"
+            to="/monitoringpage"
             className="inline-flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-[#FF6EA6] transition-colors duration-300 font-medium"
           >
             <svg 

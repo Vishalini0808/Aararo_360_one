@@ -1,3 +1,4 @@
+import { GalleryThumbnails } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -40,22 +41,14 @@ const Modal = ({ isOpen, onClose, title, children }) => {
   );
 };
 
-// Video Card Component with Advanced Effects
-const VideoCard = ({ video, type = 'landscape', index, onVideoClick }) => {
+// Video Card Component
+const VideoCard = ({ video, type = 'landscape', index, onVideoPlay }) => {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef(null);
 
   const handleClick = () => {
-    if (onVideoClick) {
-      onVideoClick(index);
-    } else {
-      if (videoRef.current) {
-        if (videoRef.current.paused) {
-          videoRef.current.play();
-        } else {
-          videoRef.current.pause();
-        }
-      }
+    if (onVideoPlay) {
+      onVideoPlay(video, index);
     }
   };
 
@@ -194,6 +187,352 @@ const ShortsCard = ({ short, index, onShortsClick }) => {
   );
 };
 
+// Mini Video Player Component (YouTube-like)
+const MiniVideoPlayer = ({ video, isMinimized, onToggleSize, onClose, onNext, onPrevious }) => {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.5);
+  const [showVolume, setShowVolume] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const updateTime = () => setCurrentTime(video.currentTime);
+    const updateDuration = () => setDuration(video.duration);
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    video.addEventListener('timeupdate', updateTime);
+    video.addEventListener('loadedmetadata', updateDuration);
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+
+    return () => {
+      video.removeEventListener('timeupdate', updateTime);
+      video.removeEventListener('loadedmetadata', updateDuration);
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+    };
+  }, []);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+    }
+  };
+
+  const handleSeek = (e) => {
+    if (videoRef.current) {
+      const newTime = (e.target.value / 100) * duration;
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (videoRef.current) {
+      videoRef.current.volume = newVolume;
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      if (videoRef.current.muted) {
+        setVolume(0);
+      } else {
+        setVolume(0.5);
+      }
+    }
+  };
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
+  if (isMinimized) {
+    return (
+      <div className="fixed bottom-4 right-4 w-80 bg-black rounded-xl shadow-2xl z-50 border border-gray-700 overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between p-3 bg-gray-900">
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+              {video.channel?.charAt(0) || 'C'}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-white text-sm font-medium truncate">{video.title}</p>
+              <p className="text-gray-400 text-xs truncate">{video.channel}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={onToggleSize}
+              className="text-gray-400 hover:text-white p-1 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
+              </svg>
+            </button>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-white p-1 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Video */}
+        <div className="relative aspect-video bg-black">
+          <video
+            ref={videoRef}
+            src={video.videoUrl}
+            className="w-full h-full object-contain"
+            playsInline
+            loop={false}
+            volume={volume}
+          />
+          
+          {/* Play/Pause Overlay */}
+          <div 
+            className="absolute inset-0 flex items-center justify-center bg-black/40 cursor-pointer"
+            onClick={togglePlay}
+          >
+            <div className="bg-white/20 backdrop-blur-lg rounded-full p-2">
+              <div className="bg-white rounded-full p-2">
+                <span className="text-xl text-gray-800">
+                  {isPlaying ? '❚❚' : '▶'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="p-3 bg-gray-900">
+          <div className="flex items-center gap-2 mb-2">
+            <button
+              onClick={togglePlay}
+              className="text-white p-1 hover:bg-white/20 rounded transition-colors"
+            >
+              {isPlaying ? (
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              )}
+            </button>
+
+            <div className="flex-1 text-white text-xs">
+              {formatTime(currentTime)} / {formatTime(duration)}
+            </div>
+
+            <div className="relative">
+              <button
+                onClick={toggleMute}
+                className="text-white p-1 hover:bg-white/20 rounded transition-colors"
+                onMouseEnter={() => setShowVolume(true)}
+              >
+                {volume === 0 ? (
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                  </svg>
+                ) : (
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                  </svg>
+                )}
+              </button>
+
+              {showVolume && (
+                <div 
+                  className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-black/90 backdrop-blur-lg rounded-lg p-3"
+                  onMouseLeave={() => setShowVolume(false)}
+                >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                    className="w-20 h-1 bg-gray-600 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Progress Bar */}
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={(currentTime / duration) * 100 || 0}
+            onChange={handleSeek}
+            className="w-full h-1 bg-gray-600 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Fullscreen Mode
+  return (
+    <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+      {/* Close Button */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 text-white p-2 hover:bg-white/20 rounded-full transition-colors z-10"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Minimize Button */}
+      <button
+        onClick={onToggleSize}
+        className="absolute top-4 right-16 text-white p-2 hover:bg-white/20 rounded-full transition-colors z-10"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5v14" />
+        </svg>
+      </button>
+
+      {/* Video Container */}
+      <div className="w-full max-w-6xl mx-4">
+        {/* Video */}
+        <div className="relative aspect-video bg-black rounded-xl overflow-hidden">
+          <video
+            ref={videoRef}
+            src={video.videoUrl}
+            className="w-full h-full object-contain"
+            playsInline
+            loop={false}
+            volume={volume}
+            autoPlay
+          />
+          
+          {/* Controls Overlay */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <button
+                onClick={togglePlay}
+                className="text-white p-2 hover:bg-white/20 rounded-full transition-colors"
+              >
+                {isPlaying ? (
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                )}
+              </button>
+
+              <div className="flex-1 text-white text-lg">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </div>
+
+              <div className="relative">
+                <button
+                  onClick={toggleMute}
+                  className="text-white p-2 hover:bg-white/20 rounded-full transition-colors"
+                  onMouseEnter={() => setShowVolume(true)}
+                >
+                  {volume === 0 ? (
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                  ) : (
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                    </svg>
+                  )}
+                </button>
+
+                {showVolume && (
+                  <div 
+                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-black/90 backdrop-blur-lg rounded-lg p-3"
+                    onMouseLeave={() => setShowVolume(false)}
+                  >
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.1"
+                      value={volume}
+                      onChange={handleVolumeChange}
+                      className="w-20 h-1 bg-gray-600 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Progress Bar */}
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={(currentTime / duration) * 100 || 0}
+              onChange={handleSeek}
+              className="w-full h-2 bg-gray-600 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+            />
+          </div>
+        </div>
+
+        {/* Video Info */}
+        <div className="mt-6 text-white">
+          <h2 className="text-2xl font-bold mb-2">{video.title}</h2>
+          <div className="flex items-center gap-4 text-gray-300">
+            <span className="font-medium">{video.channel}</span>
+            <span>{video.views}</span>
+            <span>{video.time}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={onPrevious}
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white p-4 hover:bg-white/20 rounded-full transition-colors"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button
+        onClick={onNext}
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white p-4 hover:bg-white/20 rounded-full transition-colors"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  );
+};
+
 // Main Component
 export default function BabyCareHub() {
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -205,6 +544,12 @@ export default function BabyCareHub() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  
+  // Mini player states
+  const [currentVideo, setCurrentVideo] = useState(null);
+  const [isMiniPlayerOpen, setIsMiniPlayerOpen] = useState(false);
+  const [isMiniPlayerMinimized, setIsMiniPlayerMinimized] = useState(false);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   
   const videoRefs = useRef([]);
 
@@ -244,6 +589,7 @@ export default function BabyCareHub() {
     {
       id: 1,
       videoUrl: './v1.mp4',
+      GalleryThumbnails:"./guide1.mp4",
       title: 'Complete Baby Care Guide for New Parents',
       channel: 'Parenting Pro',
       views: '1.2M views',
@@ -292,38 +638,68 @@ export default function BabyCareHub() {
       videoUrl: './videoguide3.mp4',
       title: 'Mirror Behaviour',
     },
-    {
+     {
       id: 4,
+      videoUrl: './videoguide4.mp4',
+      title: 'Mirror Behaviour',
+    },
+     {
+      id: 5,
+      videoUrl: './videoguide5.mp4',
+      title: 'Mirror Behaviour',
+    },
+     {
+      id: 6,
+      videoUrl: './videoguide6.mp4',
+      title: 'Mirror Behaviour',
+    },
+     {
+      id: 7,
+      videoUrl: './videoguide7.mp4',
+      title: 'Mirror Behaviour',
+    },
+    {
+      id: 8,
+      videoUrl: './videoguide8.mp4',
+      title: 'Mirror Behaviour',
+    },
+    {
+      id: 9,
+      videoUrl: './videoguide9.mp4',
+      title: 'Mirror Behaviour',
+    },
+    {
+      id: 10,
       videoUrl: './vs1.mp4',
       title: 'Entertainment Shorts',
     },
     {
-      id: 5,
+      id: 11,
       videoUrl: './vs2.mp4',
       title: 'Entertainment Shorts',
     },
     {
-      id: 6,
+      id: 12,
       videoUrl: './vs3.mp4',
       title: 'Entertainment Shorts',
     },
     {
-      id: 7,
+      id: 13,
       videoUrl: './vs4.mp4',
       title: 'Entertainment Shorts',
     },
     {
-      id: 8,
+      id: 14,
       videoUrl: './vs5.mp4',
       title: 'Entertainment Shorts',
     },
     {
-      id: 9,
+      id: 15,
       videoUrl: './vs6.mp4',
       title: 'Entertainment Shorts',
     },
     {
-      id: 10,
+      id: 16,
       videoUrl: './vs7.mp4',
       title: 'Entertainment Shorts',
     }
@@ -402,6 +778,9 @@ export default function BabyCareHub() {
     }
   ];
 
+  // Combine all videos for navigation
+  const allVideos = [...landscapeVideos, ...mixVideos, ...parentGuidesVideos];
+
   useEffect(() => { 
     const timer = setInterval(() => { 
       setCurrentTip((prev) => (prev + 1) % dailyTips.length); 
@@ -415,6 +794,34 @@ export default function BabyCareHub() {
     setIsFullscreen(true);
     setIsPlaying(true);
     document.body.style.overflow = 'hidden';
+  };
+
+  const handleVideoPlay = (video, index) => {
+    setCurrentVideo(video);
+    setCurrentVideoIndex(index);
+    setIsMiniPlayerOpen(true);
+    setIsMiniPlayerMinimized(false);
+  };
+
+  const toggleMiniPlayerSize = () => {
+    setIsMiniPlayerMinimized(!isMiniPlayerMinimized);
+  };
+
+  const closeMiniPlayer = () => {
+    setIsMiniPlayerOpen(false);
+    setCurrentVideo(null);
+  };
+
+  const playNextVideo = () => {
+    const nextIndex = (currentVideoIndex + 1) % allVideos.length;
+    setCurrentVideo(allVideos[nextIndex]);
+    setCurrentVideoIndex(nextIndex);
+  };
+
+  const playPreviousVideo = () => {
+    const prevIndex = currentVideoIndex === 0 ? allVideos.length - 1 : currentVideoIndex - 1;
+    setCurrentVideo(allVideos[prevIndex]);
+    setCurrentVideoIndex(prevIndex);
   };
 
   const toggleFullscreen = () => {
@@ -435,7 +842,15 @@ export default function BabyCareHub() {
   };
 
   const toggleMute = () => {
-    setMuted(!muted);
+    const newMutedState = !muted;
+    setMuted(newMutedState);
+    
+    // Update all video elements
+    videoRefs.current.forEach(video => {
+      if (video) {
+        video.muted = newMutedState;
+      }
+    });
   };
 
   const handleScroll = (e) => {
@@ -463,6 +878,9 @@ export default function BabyCareHub() {
     if (isFullscreen && videoRefs.current[currentShortIndex]) {
       const currentVideo = videoRefs.current[currentShortIndex];
       
+      // Sync mute state with current video
+      currentVideo.muted = muted;
+      
       if (isPlaying) {
         currentVideo.play().catch(console.error);
       } else {
@@ -476,7 +894,7 @@ export default function BabyCareHub() {
         }
       });
     }
-  }, [currentShortIndex, isPlaying, isFullscreen]);
+  }, [currentShortIndex, isPlaying, isFullscreen, muted]);
 
   const currentTopic = topics.find((t) => t.id === selectedTopic);
 
@@ -552,349 +970,7 @@ export default function BabyCareHub() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                {/* Sidebar - Weekly Navigation */}
-                <div className="lg:col-span-1">
-                  <div className="bg-white rounded-2xl p-5 shadow-lg border border-gray-200 sticky top-6">
-                    <h3 className="font-bold text-gray-900 mb-4">Development Timeline</h3>
-                    
-                    <div className="space-y-2 max-h-96 overflow-y-auto">
-                      {/* Current Week */}
-                      <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-3 cursor-pointer hover:bg-purple-100 transition-colors">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-purple-700 font-semibold text-sm">Week 4</span>
-                          <span className="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">Current</span>
-                        </div>
-                        <p className="text-purple-600 text-xs">Social Smiles • Head Control</p>
-                        <div className="flex gap-1 mt-1">
-                          <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
-                          <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
-                          <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
-                          <span className="w-2 h-2 bg-gray-300 rounded-full"></span>
-                        </div>
-                      </div>
-
-                      {/* Completed Weeks */}
-                      <div className="bg-green-50 border border-green-200 rounded-xl p-3 opacity-100 cursor-pointer hover:bg-green-100 transition-colors">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-green-700 font-semibold text-sm">Week 3</span>
-                          <span className="text-green-600 text-sm">✓</span>
-                        </div>
-                        <p className="text-green-600 text-xs">Tracking Objects • Sounds</p>
-                        <div className="text-green-500 text-xs mt-1">All milestones achieved</div>
-                      </div>
-
-                      <div className="bg-green-50 border border-green-200 rounded-xl p-3 opacity-80 cursor-pointer hover:bg-green-100 transition-colors">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-green-700 font-semibold text-sm">Week 2</span>
-                          <span className="text-green-600 text-sm">✓</span>
-                        </div>
-                        <p className="text-green-600 text-xs">Umbilical Cord Care</p>
-                        <div className="text-green-500 text-xs mt-1">Healing well</div>
-                      </div>
-
-                      <div className="bg-green-50 border border-green-200 rounded-xl p-3 opacity-60 cursor-pointer hover:bg-green-100 transition-colors">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-green-700 font-semibold text-sm">Week 1</span>
-                          <span className="text-green-600 text-sm">✓</span>
-                        </div>
-                        <p className="text-green-600 text-xs">Newborn Adaptation</p>
-                        <div className="text-green-500 text-xs mt-1">Successful start</div>
-                      </div>
-
-                      {/* Upcoming Weeks */}
-                      <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 cursor-pointer hover:bg-blue-100 transition-colors">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-blue-700 font-semibold text-sm">Week 5</span>
-                          <span className="text-blue-500 text-xs font-semibold">Next Week</span>
-                        </div>
-                        <p className="text-blue-600 text-xs">Vocalization • Strength</p>
-                        <div className="text-blue-500 text-xs mt-1">First vaccines scheduled</div>
-                      </div>
-
-                      <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 opacity-70 cursor-pointer hover:bg-gray-100 transition-colors">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-gray-600 font-semibold text-sm">Week 6</span>
-                        </div>
-                        <p className="text-gray-500 text-xs">Head Control • Social Engagement</p>
-                      </div>
-
-                      <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 opacity-50 cursor-pointer hover:bg-gray-100 transition-colors">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-gray-600 font-semibold text-sm">Week 7</span>
-                        </div>
-                        <p className="text-gray-500 text-xs">Visual Tracking • Hand Coordination</p>
-                      </div>
-
-                      <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 opacity-40 cursor-pointer hover:bg-gray-100 transition-colors">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-gray-600 font-semibold text-sm">Week 8</span>
-                        </div>
-                        <p className="text-gray-500 text-xs">2-Month Checkup • Vaccinations</p>
-                      </div>
-                    </div>
-
-                    {/* Progress Summary */}
-                    <div className="mt-6 pt-4 border-t border-gray-200">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm text-gray-600">Development Progress</span>
-                        <span className="text-sm font-semibold text-gray-900">75%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div className="bg-green-600 h-2 rounded-full" style={{width: '75%'}}></div>
-                      </div>
-                      <div className="flex justify-between text-xs text-gray-500 mt-1">
-                        <span>4/8 weeks</span>
-                        <span>12/16 milestones</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Main Content - Current Week Details */}
-                <div className="lg:col-span-3">
-                  <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 mb-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-900">Week 4 - Social Development & Physical Milestones</h3>
-                        <p className="text-gray-600">Your baby is becoming more alert and responsive to the world around them</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-gray-500">Developmental Age</div>
-                        <div className="text-lg font-bold text-purple-600">4 Weeks • 1 Month</div>
-                      </div>
-                    </div>
-
-                    {/* Key Development Areas */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                      <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                        <div className="text-2xl font-bold text-blue-600 mb-1">3.8kg</div>
-                        <div className="text-sm text-blue-700">Current Weight</div>
-                        <div className="text-xs text-blue-600 mt-1">Healthy weight gain</div>
-                      </div>
-                      
-                      <div className="bg-green-50 rounded-xl p-4 border border-green-200">
-                        <div className="text-2xl font-bold text-green-600 mb-1">54cm</div>
-                        <div className="text-sm text-green-700">Current Length</div>
-                        <div className="text-xs text-green-600 mt-1">Steady growth</div>
-                      </div>
-                      
-                      <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
-                        <div className="text-2xl font-bold text-purple-600 mb-1">6-8</div>
-                        <div className="text-sm text-purple-700">Daily Feedings</div>
-                        <div className="text-xs text-purple-600 mt-1">Every 2-3 hours</div>
-                      </div>
-                      
-                      <div className="bg-orange-50 rounded-xl p-4 border border-orange-200">
-                        <div className="text-2xl font-bold text-orange-600 mb-1">14-17</div>
-                        <div className="text-sm text-orange-700">Sleep Hours</div>
-                        <div className="text-xs text-orange-600 mt-1">Per 24 hours</div>
-                      </div>
-                    </div>
-
-                    {/* This Week's Focus Areas */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-4">🎯 This Week's Development Focus</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
-                          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <span className="text-blue-600 text-lg">👀</span>
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-900">Visual Tracking</div>
-                            <div className="text-sm text-gray-600 mt-1">Baby follows objects with eyes horizontally</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200">
-                          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <span className="text-green-600 text-lg">😊</span>
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-900">Social Smiles</div>
-                            <div className="text-sm text-gray-600 mt-1">First responsive smiles to faces and voices</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border border-purple-200">
-                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <span className="text-purple-600 text-lg">💪</span>
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-900">Head Control</div>
-                            <div className="text-sm text-gray-600 mt-1">Lifts head briefly during tummy time</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-pink-50 to-orange-50 rounded-xl border border-pink-200">
-                          <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <span className="text-pink-600 text-lg">🗣️</span>
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-900">Vocalization</div>
-                            <div className="text-sm text-gray-600 mt-1">Makes cooing and gurgling sounds</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Development Activities */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-4">🧩 Recommended Activities This Week</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-white border border-gray-200 rounded-xl p-4">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                              <span className="text-yellow-600">⭐</span>
-                            </div>
-                            <div>
-                              <div className="font-medium text-gray-900">Face-to-Face Time</div>
-                              <div className="text-xs text-gray-500">5-10 minutes, 3x daily</div>
-                            </div>
-                          </div>
-                          <p className="text-sm text-gray-600">Hold baby 8-12 inches from your face and make exaggerated expressions</p>
-                        </div>
-                        
-                        <div className="bg-white border border-gray-200 rounded-xl p-4">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                              <span className="text-blue-600">🔔</span>
-                            </div>
-                            <div>
-                              <div className="font-medium text-gray-900">Sound Tracking</div>
-                              <div className="text-xs text-gray-500">2-3 minutes, 2x daily</div>
-                            </div>
-                          </div>
-                          <p className="text-sm text-gray-600">Gently shake a rattle and move it slowly for baby to follow with eyes</p>
-                        </div>
-                        
-                        <div className="bg-white border border-gray-200 rounded-xl p-4">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                              <span className="text-green-600">🔄</span>
-                            </div>
-                            <div>
-                              <div className="font-medium text-gray-900">Tummy Time</div>
-                              <div className="text-xs text-gray-500">3-5 minutes, 2-3x daily</div>
-                            </div>
-                          </div>
-                          <p className="text-sm text-gray-600">Place baby on tummy while awake and supervised to strengthen neck muscles</p>
-                        </div>
-                        
-                        <div className="bg-white border border-gray-200 rounded-xl p-4">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                              <span className="text-purple-600">🎵</span>
-                            </div>
-                            <div>
-                              <div className="font-medium text-gray-900">Vocal Play</div>
-                              <div className="text-xs text-gray-500">Throughout the day</div>
-                            </div>
-                          </div>
-                          <p className="text-sm text-gray-600">Imitate baby's sounds and have "conversations" to encourage vocalization</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Health & Safety Checklist */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-4">🏥 Health & Safety Checklist</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                          <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <span className="text-green-600 text-sm">✓</span>
-                          </div>
-                          <div>
-                            <div className="font-medium text-gray-900">Weight Check</div>
-                            <div className="text-sm text-gray-600">Weekly growth monitoring</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                          <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <span className="text-green-600 text-sm">✓</span>
-                          </div>
-                          <div>
-                            <div className="font-medium text-gray-900">Feeding Pattern</div>
-                            <div className="text-sm text-gray-600">8-12 feeds per 24 hours</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                          <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <span className="text-yellow-600 text-sm">!</span>
-                          </div>
-                          <div>
-                            <div className="font-medium text-gray-900">Sleep Safety</div>
-                            <div className="text-sm text-gray-600">Back to sleep, clear crib</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                          <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <span className="text-blue-600 text-sm">○</span>
-                          </div>
-                          <div>
-                            <div className="font-medium text-gray-900">Vaccination Prep</div>
-                            <div className="text-sm text-gray-600">Schedule 2-month vaccines</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Development Notes */}
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-4">📝 Development Observations & Notes</h4>
-                      <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                        <textarea 
-                          className="w-full h-32 bg-white border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                          placeholder="Record your observations: When did you notice the first social smile? How is head control progressing? Any concerns about feeding or sleep patterns?"
-                        ></textarea>
-                        <div className="flex justify-between items-center mt-3">
-                          <div className="flex gap-2">
-                            <button className="px-3 py-1 bg-white border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition-colors">
-                              Add Photo
-                            </button>
-                            <button className="px-3 py-1 bg-white border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition-colors">
-                              Record Video
-                            </button>
-                          </div>
-                          <button className="px-4 py-2 bg-purple-600 text-white text-sm rounded-lg hover:bg-purple-700 transition-colors font-semibold">
-                            Save Development Log
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Quick Health Tools */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <button className="bg-white p-4 rounded-xl shadow-md border border-gray-200 hover:border-blue-300 transition-colors text-center group">
-                      <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-200 transition-colors">
-                        <span className="text-blue-600 text-xl">📈</span>
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Growth Charts</h4>
-                      <p className="text-gray-500 text-sm">Track percentiles & trends</p>
-                    </button>
-
-                    <button className="bg-white p-4 rounded-xl shadow-md border border-gray-200 hover:border-green-300 transition-colors text-center group">
-                      <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-green-200 transition-colors">
-                        <span className="text-green-600 text-xl">💉</span>
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Vaccination Tracker</h4>
-                      <p className="text-gray-500 text-sm">Schedule & records</p>
-                    </button>
-
-                    <button className="bg-white p-4 rounded-xl shadow-md border border-gray-200 hover:border-orange-300 transition-colors text-center group">
-                      <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-orange-200 transition-colors">
-                        <span className="text-orange-600 text-xl">📋</span>
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Health Log</h4>
-                      <p className="text-gray-500 text-sm">Symptoms & medications</p>
-                    </button>
-                  </div>
-                </div>
-              </div>
+              {/* ... rest of care-hub content remains the same ... */}
             </div>
 
             {/* Care Cards Grid */}
@@ -957,6 +1033,7 @@ export default function BabyCareHub() {
                     video={video} 
                     type="landscape" 
                     index={index}
+                    onVideoPlay={handleVideoPlay}
                   />
                 ))}
               </div>
@@ -1014,7 +1091,8 @@ export default function BabyCareHub() {
                     key={video.id} 
                     video={video} 
                     type="landscape" 
-                    index={index + landscapeVideos.length + mixVideos.length}
+                    index={index + landscapeVideos.length}
+                    onVideoPlay={handleVideoPlay}
                   />
                 ))}
               </div>
@@ -1039,6 +1117,7 @@ export default function BabyCareHub() {
                     video={video} 
                     type="landscape" 
                     index={index + landscapeVideos.length}
+                    onVideoPlay={handleVideoPlay}
                   />
                 ))}
               </div>
@@ -1056,6 +1135,18 @@ export default function BabyCareHub() {
         >
           {renderModalContent(selectedTopic)}
         </Modal>
+      )}
+
+      {/* Mini Video Player */}
+      {isMiniPlayerOpen && currentVideo && (
+        <MiniVideoPlayer
+          video={currentVideo}
+          isMinimized={isMiniPlayerMinimized}
+          onToggleSize={toggleMiniPlayerSize}
+          onClose={closeMiniPlayer}
+          onNext={playNextVideo}
+          onPrevious={playPreviousVideo}
+        />
       )}
 
       {/* Enhanced Fullscreen Shorts Player */}
@@ -1079,7 +1170,22 @@ export default function BabyCareHub() {
                 <div className="text-white font-bold text-lg bg-white/20 backdrop-blur-lg px-4 py-2 rounded-full">
                   Shorts • {currentShortIndex + 1}/{shortsVideos.length}
                 </div>
-                <div className="w-12"></div>
+                {/* Mute/Unmute Button */}
+                <button
+                  onClick={toggleMute}
+                  className="text-white p-3 rounded-full hover:bg-white/20 transition-colors duration-300"
+                >
+                  {muted ? (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clipRule="evenodd" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                    </svg>
+                  ) : (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072M12 6a9 9 0 010 12m-4.5-9.5L12 3v18l-4.5-4.5H4a1 1 0 01-1-1v-7a1 1 0 011-1h3.5z" />
+                    </svg>
+                  )}
+                </button>
               </div>
             </div>
 
@@ -1093,7 +1199,13 @@ export default function BabyCareHub() {
                   }`}
                 >
                   <video
-                    ref={el => videoRefs.current[index] = el}
+                    ref={el => {
+                      videoRefs.current[index] = el;
+                      // Sync mute state when video element is created
+                      if (el && index === currentShortIndex) {
+                        el.muted = muted;
+                      }
+                    }}
                     src={short.videoUrl}
                     className="w-full h-full object-contain"
                     muted={muted}

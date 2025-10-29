@@ -336,7 +336,45 @@ const Shop = () => {
   });
 
   const addToCart = (product) => {
-    setCart([...cart, product]);
+    const existingItem = cart.find(item => item.id === product.id);
+    
+    if (existingItem) {
+      setCart(cart.map(item => 
+        item.id === product.id 
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      ));
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+    
+    // Show success message
+    alert(`${product.name} added to cart!`);
+  };
+
+  const removeFromCart = (productId) => {
+    setCart(cart.filter(item => item.id !== productId));
+  };
+
+  const updateQuantity = (productId, newQuantity) => {
+    if (newQuantity < 1) {
+      removeFromCart(productId);
+      return;
+    }
+    
+    setCart(cart.map(item => 
+      item.id === productId 
+        ? { ...item, quantity: newQuantity }
+        : item
+    ));
+  };
+
+  const getCartTotal = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
+
+  const getTotalItems = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
   };
 
   const getCategoryName = (categoryId) => {
@@ -349,34 +387,21 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
-     
+      {/* 🔙 Back Button Added Here */}
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+  <button
+    onClick={() => navigate(-1)}
+    className=" px-5 py-2 rounded-xl font-semibold "
+  >
+    ← Back
+  </button>
+</div>
 
-      {/* Hero Section - Reduced Height */}
-      <div className="relative bg-gradient-to-r from-purple-600 to-pink-600 py-12">
-         {/* Back Button */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
-        <button
-          onClick={() => navigate('/')}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-gray-600 hover:text-[#FF6EA6] font-medium border border-pink-100 mb-2"
-        >
-          <svg 
-            className="w-5 h-5" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M10 19l-7-7m0 0l7-7m-7 7h18" 
-            />
-          </svg>
-        </button>
-      </div>
+    {/* Hero Section - Reduced Height */}
+<div className="relative bg-gradient-to-r from-purple-600 to-pink-600 py-12">
+  
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-         
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Baby & Mother Care Products
           </h1>
@@ -429,7 +454,7 @@ const Shop = () => {
               </div>
             </div>
 
-            {/* Sort and Cart */}
+            {/* Updated Cart Display in Header */}
             <div className="flex items-center gap-4">
               <select 
                 value={sortBy} 
@@ -442,25 +467,29 @@ const Shop = () => {
                 <option value="rating">Customer Rating</option>
               </select>
 
-              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg">
+              <button
+                onClick={() => navigate('/checkout')}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:-translate-y-0.5"
+              >
                 <span>🛒</span>
-                <span>{cart.length} items</span>
+                <span>{getTotalItems()} items</span>
                 <span>•</span>
-                <span>₹{cart.reduce((total, item) => total + item.price, 0).toLocaleString()}</span>
-              </div>
+                <span>₹{getCartTotal().toLocaleString()}</span>
+                <span>→</span>
+              </button>
             </div>
           </div>
-        </div>
 
-        {/* Products Info */}
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            {getCategoryName(activeCategory)}
-          </h2>
-          <p className="text-gray-600">
-            Showing {sortedProducts.length} products
-            {searchQuery && ` for "${searchQuery}"`}
-          </p>
+          {/* Products Info */}
+          <div className="mb-8 mt-6">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              {getCategoryName(activeCategory)}
+            </h2>
+            <p className="text-gray-600">
+              Showing {sortedProducts.length} products
+              {searchQuery && ` for "${searchQuery}"`}
+            </p>
+          </div>
         </div>
 
         {/* Products Grid */}

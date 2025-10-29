@@ -12,26 +12,26 @@ const Header = () => {
   const location = useLocation();
 
   const moreItems = [
-    { 
-      name: 'Schemes', 
-      path: '/schemes', 
-      description: 'Government & Private Schemes',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      )
-    },
-    { 
-      name: 'Vaccinations', 
-      path: '/baby-tracking', 
-      description: 'Vaccine Schedule & Tracker',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      )
-    },
+    // { 
+    //   name: 'Schemes', 
+    //   path: '/schemes', 
+    //   description: 'Government & Private Schemes',
+    //   icon: (
+    //     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    //     </svg>
+    //   )
+    // },
+    // { 
+    //   name: 'Vaccinations', 
+    //   path: '/baby-tracking', 
+    //   description: 'Vaccine Schedule & Tracker',
+    //   icon: (
+    //     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    //     </svg>
+    //   )
+    // },
     { 
       name: 'Shop', 
       path: '/shop', 
@@ -111,7 +111,7 @@ const Header = () => {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 p-2.5  ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 p-2.5 ${
           isScrolled 
             ? 'bg-gradient-to-r from-pink-50/95 via-white to-blue-50/95 backdrop-blur-xl border-b border-pink-200/30 shadow-lg h-16' 
             : 'bg-gradient-to-r from-pink-50/90 via-white to-blue-50/90 backdrop-blur-lg border-b border-pink-200/20 h-20'
@@ -124,12 +124,12 @@ const Header = () => {
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-200/10 rounded-full blur-2xl"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-full">
             {/* Logo */}
             <Link 
               to="/" 
-              className="flex items-center space-x-3 group flex-shrink-0"
+              className="flex items-center space-x-2 sm:space-x-3 group flex-shrink-0"
               aria-label="Aararo 360° - Home"
             >
               <div className="relative flex-shrink-0">
@@ -137,20 +137,20 @@ const Header = () => {
                 <img 
                   src="aararo_logo.png" 
                   alt="ஆராரோ 360°" 
-                  className="relative h-10 w-10 transition-transform duration-300 group-hover:scale-105"
+                  className="relative h-8 w-8 sm:h-10 sm:w-10 transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent leading-tight">
+                <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent leading-tight">
                   ஆராரோ 360°
                 </span>
-                <span className="text-xs text-gray-600 font-medium tracking-wide">Pregnancy Companion</span>
+                <span className="text-xs text-gray-600 font-medium tracking-wide hidden xs:block">Pregnancy Companion</span>
               </div>
             </Link>
 
             {/* Desktop Navigation - Perfectly Aligned */}
-            <nav className="hidden lg:flex items-center justify-center flex-1 mx-12" aria-label="Main navigation">
-              <div className="flex items-center space-x-10">
+            <nav className="hidden lg:flex items-center justify-center flex-1 mx-8 xl:mx-12" aria-label="Main navigation">
+              <div className="flex items-center space-x-6 xl:space-x-10">
                 {navItems.map((item) => (
                   <Link
                     key={item.path}
@@ -191,7 +191,7 @@ const Header = () => {
 
                   {isMoreOpen && (
                     <div 
-                      className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-96 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-pink-200/30 py-5"
+                      className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-80 xl:w-96 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-pink-200/30 py-5"
                       onMouseLeave={() => setIsMoreOpen(false)}
                       role="menu"
                     >
@@ -227,32 +227,32 @@ const Header = () => {
             </nav>
 
             {/* User Actions - Right Aligned with Get Started at the end */}
-            <div className="flex items-center space-x-4 flex-shrink-0 ml-auto">
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0 ml-auto">
               {/* Premium Button */}
               <button 
                 onClick={handlePremium}
-                className="hidden sm:flex items-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-xl hover:from-pink-600 hover:to-blue-600 transform hover:-translate-y-0.5 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                className="hidden sm:flex items-center space-x-2 px-4 py-2 xl:px-5 xl:py-2.5 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-xl hover:from-pink-600 hover:to-blue-600 transform hover:-translate-y-0.5 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clipRule="evenodd" />
                 </svg>
-                <span>Premium</span>
+                <span className="hidden xl:inline">Premium</span>
               </button>
 
               {isLoggedIn ? (
                 <div className="relative">
                   <button 
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-3 p-2 rounded-xl hover:bg-white/80 transition-all duration-300 border border-transparent hover:border-pink-200/50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                    className="flex items-center space-x-2 sm:space-x-3 p-2 rounded-xl hover:bg-white/80 transition-all duration-300 border border-transparent hover:border-pink-200/50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                     aria-expanded={isUserMenuOpen}
                     aria-haspopup="true"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-blue-500 rounded-full flex items-center justify-center text-white text-sm font-semibold shadow-md">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-pink-500 to-blue-500 rounded-full flex items-center justify-center text-white text-sm font-semibold shadow-md">
                       {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                     </div>
                     <div className="hidden sm:block text-left">
-                      <div className="text-sm font-semibold text-gray-900">{user?.name || 'User'}</div>
-                      <div className="text-xs text-gray-600">Premium Member</div>
+                      <div className="text-sm font-semibold text-gray-900 truncate max-w-24 xl:max-w-none">{user?.name || 'User'}</div>
+                      <div className="text-xs text-gray-600 hidden xl:block">Premium Member</div>
                     </div>
                     <svg className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${isUserMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -298,16 +298,16 @@ const Header = () => {
                   )}
                 </div>
               ) : (
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2 sm:space-x-4">
                   <Link 
                     to="/signin" 
-                    className="hidden sm:block px-5 py-2.5 text-gray-700 hover:text-pink-600 font-semibold transition-colors duration-300"
+                    className="hidden sm:block px-4 py-2 xl:px-5 xl:py-2.5 text-gray-700 hover:text-pink-600 font-semibold transition-colors duration-300"
                   >
                     Sign In
                   </Link>
                   <Link 
                     to="/signup" 
-                    className="px-6 py-2.5 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-xl hover:from-pink-600 hover:to-blue-600 transform hover:-translate-y-0.5 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                    className="px-4 py-2 xl:px-6 xl:py-2.5 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-xl hover:from-pink-600 hover:to-blue-600 transform hover:-translate-y-0.5 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 text-sm xl:text-base"
                   >
                     Get Started
                   </Link>
@@ -377,14 +377,14 @@ const Header = () => {
                     <div className="grid grid-cols-2 gap-3">
                       <Link 
                         to="/signin" 
-                        className="px-4 py-3 text-center text-gray-700 font-semibold rounded-xl hover:bg-pink-50 transition-colors duration-300 border border-pink-200/30"
+                        className="px-4 py-3 text-center text-gray-700 font-semibold rounded-xl hover:bg-pink-50 transition-colors duration-300 border border-pink-200/30 text-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Sign In
                       </Link>
                       <Link 
                         to="/signup" 
-                        className="px-3 py-2 text-center bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-xl hover:from-pink-600 hover:to-blue-600 transition-all duration-300 shadow-lg"
+                        className="px-3 py-2 text-center bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-xl hover:from-pink-600 hover:to-blue-600 transition-all duration-300 shadow-lg text-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Get Started

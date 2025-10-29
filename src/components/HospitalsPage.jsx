@@ -29,7 +29,7 @@ return (
 <div className="container mx-auto px-4 py-4"> 
 <div className="flex items-center gap-4"> 
 <button 
-onClick={() => navigate('/')} 
+onClick={() => navigate(-1)} 
 className="rounded-xl text-3xl mr-3" 
 aria-label="Go back to homepage" 
 > 
