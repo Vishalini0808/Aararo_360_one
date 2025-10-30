@@ -34,6 +34,10 @@ import AddAppointment from './components/AddAppointment';
 import { checkUpcomingReminders } from './utils/ReminderUtils';
 import BabysitterDashboard from './components/BabySitterDashboard';
 import Checkout from './components/CheckOut';
+import FatherRole from './components/FatherRole';
+import BabyDetailsFormPage from './components/BabyDetailsFormPage';
+import ProfessionalElderlyPregnancyGuide from './components/ProfessionalElderlyPregnancyGuide';
+import BabyHubHome from './components/BabyHubHome';
 
 
 // Protected Route Component
@@ -158,6 +162,11 @@ function App() {
             <Route path='/add' element={<AddAppointment/>} />
             <Route path='/babysittingpage' element={<BabysitterDashboard/>} />
             <Route path='/checkout' element={<Checkout/>} />
+            <Route path='/father-role' element={<FatherRole/>} />
+            <Route path='/baby-details' element={<BabyDetailsFormPage/>} />
+            <Route path='/elderly-advice' element={<ProfessionalElderlyPregnancyGuide/>} />
+            {/* <Route path="/elderlyadvice" element={<BabyHubHome />} /> */}
+           
 
           
           </Routes>
