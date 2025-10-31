@@ -1740,7 +1740,7 @@ const BabyCareHub = () => {
         </div>
       </footer>
 
-      <style jsx>{`
+      <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }

@@ -111,7 +111,7 @@ const BabyDetailsBanner = () => {
       </section>
 
       {/* Custom Animations */}
-      <style jsx>{`
+      <style >{`
         @keyframes floatBackground {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
           33% { transform: translate(30px, 30px) rotate(120deg); }

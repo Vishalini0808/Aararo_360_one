@@ -4,7 +4,7 @@ import AppointmentCard from '../components/AppointmentCard';
 import { checkUpcomingReminders } from '../utils/ReminderUtils';
 import { BABY_TIPS } from '../Data/AppointmentHospitals';
 
-const Dashboard = () => {
+const AppointmentDashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(5); // Example current month
   const [upcomingReminders, setUpcomingReminders] = useState([]);
@@ -166,4 +166,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AppointmentDashboard;

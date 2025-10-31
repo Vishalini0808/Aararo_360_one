@@ -13,12 +13,12 @@ export function HospitalsHomePage() {
       path: '/hospitals'
     },
     {
-      id: 'tracker',
+      id: 'pregnancytracker',
       name: 'Pregnancy Tracker',
-      subtitle: 'Track your baby\'s growth week by week',
+      subtitle: 'Expert articles, tips, and pregnancy guides',
       icon: '❤️',
       gradient: 'from-purple-400 to-pink-500',
-      path: '/tracker'
+      path: '/pregnancy-tracker'
     },
     {
       id: 'appointments',
@@ -31,10 +31,10 @@ export function HospitalsHomePage() {
     {
       id: 'babygrowthtracker',
       name: 'Baby Growth Tracker',
-      subtitle: 'Expert articles, tips, and pregnancy guides',
+      subtitle: 'Track your baby\'s growth week by week',
       icon: '📚',
       gradient: 'from-purple-500 to-indigo-500',
-      path: '/babygrowthtracker'
+      path: '/babytracker'
     }
   ];
 

@@ -85,7 +85,7 @@ absolute top-full left-1/2 -translate-x-1/2 -mt-1.5"></div>
 ); 
 })} 
 {/* Legend */} 
-<div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-md p-3 border border gray-200"> 
+<div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-md p-3 border  gray-200"> 
 <div className="flex items-center gap-2 mb-2"> 
 <span className="text-purple-500">📍</span> 
 <span className="text-xs text-gray-700">Hospitals</span> 
@@ -101,7 +101,7 @@ absolute top-full left-1/2 -translate-x-1/2 -mt-1.5"></div>
 Click on hospital markers to view details • This is a simulated map view 
 </p> 
 </div> 
-<style jsx>{` 
+<style>{` 
 @keyframes pulse { 
 0%, 100% { opacity: 1; } 
 50% { opacity: 0.5; } 

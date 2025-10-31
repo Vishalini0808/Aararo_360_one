@@ -57,7 +57,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
       </div> 
 
       {/* Add CSS animations */}
-      <style jsx>{`
+      <style >{`
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }

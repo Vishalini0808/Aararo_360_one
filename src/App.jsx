@@ -5,27 +5,22 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Schemes from './pages/GovernmentSchemes';
 import Shop from './pages/Shop';
-// import ChildGrowth from './pages/ChildGrowth';
 import Community from './pages/Community';
 import './index.css';
 import PregnancyGuide from './pages/PregnancyGuide';
-// import BabysittingPage from './pages/BabysittingPage';
 import SignUp from './pages/Auth/SignUp';
 import SignIn from './pages/Auth/SignIn';
 import Layout from './components/Layout';
 import ForgotPassword from './pages/Auth/ForgotPassword';
+import VerifyOTP from './pages/Auth/VerifyOTP'; // Add this import
+import ResetPassword from './pages/Auth/ResetPassword'; // Add this import
 import SettingsLayout from './pages/Settings/SettingsLayout';
 import ProfileInfo from './pages/Settings/ProfileInfo';
 import PremiumMembership from './pages/Settings/PremiumMembership';
-// import HelpSupport from './pages/Settings/HelpSupport';
 import About from './pages/Settings/About';
-// Options page will be created under settings
 import Options from './pages/Settings/Options';
 import { HospitalsHomePage } from './components/HospitalsHomePage';
 import { HospitalsPage } from './components/HospitalsPage';
-import { PlaceholderPage } from './components/PlaceholderPage';
-import BabyTrackingPage from './pages/BabyTrackingPage';
-import BabyCard from './pages/BabyCard';
 import ScrollToTop from './components/ScrollToTop';
 import BabyCareHub from './components/BabyCareHub';
 import AppointmentDashboard from './pages/AppointmentDashboard';
@@ -35,10 +30,12 @@ import { checkUpcomingReminders } from './utils/ReminderUtils';
 import BabysitterDashboard from './components/BabySitterDashboard';
 import Checkout from './components/CheckOut';
 import FatherRole from './components/FatherRole';
-import BabyDetailsFormPage from './components/BabyDetailsFormPage';
 import ProfessionalElderlyPregnancyGuide from './components/ProfessionalElderlyPregnancyGuide';
 import BabyHubHome from './components/BabyHubHome';
-
+import BabyTracker from './pages/BabyTracker';
+import PregnancyTracker from './components/PregnancyTracker';
+import BabyGrowthCharts from './pages/BabyGrowthChart';
+import BabyDetailsFormPage from './components/BabyDetailsFormPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -63,7 +60,6 @@ const AppLayout = ({ children }) => {
   );
 };
 
- 
 // Sample seed data for initial appointments 
 const SEED_APPOINTMENTS = [ 
   { 
@@ -78,10 +74,8 @@ const SEED_APPOINTMENTS = [
   }, 
 ]
 
-
-
 function App() {
- useEffect(() => { 
+  useEffect(() => { 
     // Initialize with seed data if no appointments exist 
     const existingAppointments = localStorage.getItem('appointments'); 
     if (!existingAppointments) { 
@@ -96,84 +90,106 @@ function App() {
   }, []); 
 
   return (
-
-    
-    
-      <div className="App">
-        {/* <Header /> */}
-        <main>
-
-          <ScrollToTop/>
-
-          <Routes>
-
-            <Route 
-              path="/signup" element={
+    <div className="App">
+      <ScrollToTop/>
+      <main>
+        <Routes>
+          {/* Auth Routes - Public */}
+          <Route 
+            path="/signup" 
+            element={
               <PublicRoute>
-              <SignUp />
+                <SignUp />
               </PublicRoute>
             } 
-            />
+          />
 
-            <Route 
-              path="/signin" element={
+          <Route 
+            path="/signin" 
+            element={
               <PublicRoute>
-              <SignIn />
+                <SignIn />
               </PublicRoute>
             } 
-            />
+          />
 
-            <Route 
-              path="/forgotpassword" element={
+          {/* Add these new routes for password reset flow */}
+          <Route 
+            path="/forgot-password" 
+            element={
               <PublicRoute>
-              <ForgotPassword />
+                <ForgotPassword />
               </PublicRoute>
             } 
-            />
+          />
 
-           
+          <Route 
+            path="/verify-otp" 
+            element={
+              <PublicRoute>
+                <VerifyOTP />
+              </PublicRoute>
+            } 
+          />
+
+          <Route 
+            path="/reset-password" 
+            element={
+              <PublicRoute>
+                <ResetPassword />
+              </PublicRoute>
+            } 
+          />
+
+          {/* Keep your existing forgotpassword route for backward compatibility */}
+          <Route 
+            path="/forgotpassword" 
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            } 
+          />
+
           {/* Protected Routes - With Header/Footer */} 
-
-            <Route path="/" element={<ProtectedRoute> <AppLayout><Home /></AppLayout> </ProtectedRoute>}/>
-            
-            <Route path='/layout' element={Layout} />
-            <Route path="/settings" element={<SettingsLayout />}>
-              <Route index element={<Navigate to="profile" replace />} />
-              <Route path="profile" element={<ProfileInfo />} />
-              <Route path="premium" element={<PremiumMembership />} />
-              <Route path="options" element={<Options />} />
-              {/* <Route path="help" element={<HelpSupport />} /> */}
-              <Route path="about" element={<About />} />
-            </Route>
-            <Route path="/schemes" element={<Schemes />} />
-            <Route path="/shop" element={<Shop />} />
-            {/* <Route path="/child-growth" element={<ChildGrowth />} /> */}
-            <Route path="/community" element={<Community />} />
-            <Route path="/pregnancy-guide" element={<PregnancyGuide />} />
-            {/* <Route path="/babysittingpage" element={<BabysittingPage />} /> */}
-            <Route path="/elderlyadvice" element={<BabyCareHub />} />
-            <Route path="/monitoringpage" element={<HospitalsHomePage />} /> 
-            <Route path="/hospitals" element={<HospitalsPage />} /> 
-            <Route path="/tracker" element={<PlaceholderPage title="Pregnancy Tracker" />} /> 
-            <Route path='/baby-tracking' element={<BabyTrackingPage/>} />
-            <Route path='/babygrowthtracker' element={<BabyCard/>} />
-            <Route path='/appointments' element={<AppointmentDashboard/>} />
-            <Route path='/appointments/:id' element={<AppointmentDetail/>} /> 
-            <Route path='/add' element={<AddAppointment/>} />
-            <Route path='/babysittingpage' element={<BabysitterDashboard/>} />
-            <Route path='/checkout' element={<Checkout/>} />
-            <Route path='/father-role' element={<FatherRole/>} />
-            <Route path='/baby-details' element={<BabyDetailsFormPage/>} />
-            <Route path='/elderly-advice' element={<ProfessionalElderlyPregnancyGuide/>} />
-            {/* <Route path="/elderlyadvice" element={<BabyHubHome />} /> */}
-           
-
+          <Route path="/" element={
+            <ProtectedRoute> 
+              <AppLayout>
+                <Home />
+              </AppLayout> 
+            </ProtectedRoute>
+          }/>
           
-          </Routes>
-        </main>
-        
-      </div>
-    
+          <Route path='/layout' element={<Layout />} />
+          <Route path="/settings" element={<SettingsLayout />}>
+            <Route index element={<Navigate to="profile" replace />} />
+            <Route path="profile" element={<ProfileInfo />} />
+            <Route path="premium" element={<PremiumMembership />} />
+            <Route path="options" element={<Options />} />
+            <Route path="about" element={<About />} />
+          </Route>
+          <Route path="/schemes" element={<Schemes />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/pregnancy-guide" element={<PregnancyGuide />} />
+          <Route path="/elderlyadvice" element={<BabyCareHub />} />
+          <Route path="/monitoringpage" element={<HospitalsHomePage />} /> 
+          <Route path="/hospitals" element={<HospitalsPage />} /> 
+          {/* <Route path='/babytracker' element={<BabyTracker/>} /> */}
+          <Route path='/appointments' element={<AppointmentDashboard/>} />
+          <Route path='/appointments/:id' element={<AppointmentDetail/>} /> 
+          <Route path='/add' element={<AddAppointment/>} />
+          <Route path='/babysittingpage' element={<BabysitterDashboard/>} />
+          <Route path='/checkout' element={<Checkout/>} />
+          <Route path='/father-role' element={<FatherRole/>} />
+          <Route path='/baby-details' element={<BabyTracker/>} />
+          <Route path='/elderly-advice' element={<ProfessionalElderlyPregnancyGuide/>} />
+          <Route path='/pregnancy-tracker' element={<PregnancyTracker/>} />
+          {/* <Route path='/baby-details' element={<BabyDetailsFormPage/>} /> */}
+          <Route path="/babytracker" element={ <ProtectedRoute><AppLayout> <BabyGrowthCharts /> </AppLayout></ProtectedRoute> } />
+        </Routes>
+      </main>
+    </div>
   );
 }
 

@@ -90,7 +90,6 @@ const AddAppointment = () => {
       <div className="max-w-2xl mx-auto"> 
 
         
-        
 
         {/* Header */} 
         <div className="text-center mb-8"> 

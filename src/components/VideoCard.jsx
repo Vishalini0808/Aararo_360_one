@@ -648,7 +648,7 @@ const VideoGuides = () => {
         setMuted={setMuted}
       />
 
-      <style jsx>{`
+      <style >{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }

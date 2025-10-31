@@ -529,7 +529,7 @@ const ElderlyAdvice = () => {
       )}
 
       {/* Add CSS for hide-scrollbar */}
-      <style jsx>{`
+      <style >{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }

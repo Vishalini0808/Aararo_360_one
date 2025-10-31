@@ -35,7 +35,7 @@ const AppointmentCard = ({ appointment }) => {
       onClick={handleClick} 
       onKeyDown={handleKeyDown} 
       className="bg-gradient-to-br from-pink-200 to-purple-300 rounded-2xl p-6 shadow-md 
-hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer border border
+hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer border 
 pink-300" 
     > 
       {/* Header with month and status */} 
