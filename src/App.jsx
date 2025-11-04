@@ -12,8 +12,8 @@ import SignUp from './pages/Auth/SignUp';
 import SignIn from './pages/Auth/SignIn';
 import Layout from './components/Layout';
 import ForgotPassword from './pages/Auth/ForgotPassword';
-import VerifyOTP from './pages/Auth/VerifyOTP'; // Add this import
-import ResetPassword from './pages/Auth/ResetPassword'; // Add this import
+import VerifyOTP from './pages/Auth/VerifyOTP';
+import ResetPassword from './pages/Auth/ResetPassword';
 import SettingsLayout from './pages/Settings/SettingsLayout';
 import ProfileInfo from './pages/Settings/ProfileInfo';
 import PremiumMembership from './pages/Settings/PremiumMembership';
@@ -32,10 +32,13 @@ import Checkout from './components/CheckOut';
 import FatherRole from './components/FatherRole';
 import ProfessionalElderlyPregnancyGuide from './components/ProfessionalElderlyPregnancyGuide';
 import BabyHubHome from './components/BabyHubHome';
-import BabyTracker from './pages/BabyTracker';
 import PregnancyTracker from './components/PregnancyTracker';
 import BabyGrowthCharts from './pages/BabyGrowthChart';
-import BabyDetailsFormPage from './components/BabyDetailsFormPage';
+import BabyTrackerDashboard from './components/BabyTrackerDashboard';
+import AddMeasurementForm from './components/AddMeasurementForm';
+
+// Community Components - Add these imports
+import CommunityApp from './components/CommunityApp';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -59,6 +62,8 @@ const AppLayout = ({ children }) => {
     </>
   );
 };
+
+
 
 // Sample seed data for initial appointments 
 const SEED_APPOINTMENTS = [ 
@@ -170,23 +175,37 @@ function App() {
           </Route>
           <Route path="/schemes" element={<Schemes />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/community" element={<Community />} />
+          
+          {/* Updated Community Route */}
+          <Route path="/community" element={
+            <ProtectedRoute>
+              <CommunityApp />
+            </ProtectedRoute>
+          } />
+          
           <Route path="/pregnancy-guide" element={<PregnancyGuide />} />
           <Route path="/elderlyadvice" element={<BabyCareHub />} />
           <Route path="/monitoringpage" element={<HospitalsHomePage />} /> 
           <Route path="/hospitals" element={<HospitalsPage />} /> 
-          {/* <Route path='/babytracker' element={<BabyTracker/>} /> */}
           <Route path='/appointments' element={<AppointmentDashboard/>} />
           <Route path='/appointments/:id' element={<AppointmentDetail/>} /> 
           <Route path='/add' element={<AddAppointment/>} />
           <Route path='/babysittingpage' element={<BabysitterDashboard/>} />
           <Route path='/checkout' element={<Checkout/>} />
           <Route path='/father-role' element={<FatherRole/>} />
-          <Route path='/baby-details' element={<BabyTracker/>} />
+          <Route path='/baby-details' element={<BabyTrackerDashboard/>} />
           <Route path='/elderly-advice' element={<ProfessionalElderlyPregnancyGuide/>} />
           <Route path='/pregnancy-tracker' element={<PregnancyTracker/>} />
-          {/* <Route path='/baby-details' element={<BabyDetailsFormPage/>} /> */}
-          <Route path="/babytracker" element={ <ProtectedRoute><AppLayout> <BabyGrowthCharts /> </AppLayout></ProtectedRoute> } />
+          <Route path="/add-measurement" element={<AddMeasurementForm />} />
+
+          <Route path="/babytracker" element={ 
+            <ProtectedRoute>
+              <AppLayout> 
+                <BabyGrowthCharts /> 
+              </AppLayout>
+            </ProtectedRoute> 
+          } />
+
         </Routes>
       </main>
     </div>
